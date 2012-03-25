@@ -26,7 +26,7 @@ Informations about the past events remain visible in the "Past Events" table .
 Dependencies
 ============
 
-DataGridField (version 1.5.0)
+* Products.DataGridField
 
 
 Usage and tips
