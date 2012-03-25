@@ -1,0 +1,167 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<div metal:fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+        <div metal:use-macro="here/document_actions/macros/document_actions">
+            Document actions (print, sendto etc)
+        </div>
+
+        <div class="vevent">
+
+        <h1 tal:content="object_title" class="documentFirstHeading summary">
+            Title or id
+        </h1>
+
+        <div metal:use-macro="here/document_byline/macros/byline">
+            Get the byline - contains details about author and modification date.
+        </div>
+
+        <p class="documentDescription description"
+           tal:content="here/Description"
+           tal:condition="here/Description">
+            Description
+        </p>
+
+        <div class="eventDetails vcard">
+        <table class="vertical listing"
+               summary="Event details" i18n:attributes="summary summary_event_details;">
+
+            <tbody>
+                <tr>
+                    <th i18n:translate="event_what">What</th>
+                    <td tal:content="python:modules['string'].join(here.Subject(), ' ')">
+                        Conference
+                    </td>
+                </tr>
+                <tr>
+                    <th i18n:translate="event_when">When</th>
+                    <td>
+                        <tal:differentday tal:condition="python:not here.start().Date() == here.end().Date()">
+                            <abbr class="dtstart"
+                                  tal:attributes="title python:here.start()"
+                                  tal:content="python:here.toLocalizedTime(here.start(), long_format=1)">
+                                Start Date Time
+                            </abbr>
+                            <span i18n:translate="event_to">to</span> <br />
+                            <abbr class="dtend"
+                                  tal:attributes="title python:here.end()"
+                                  tal:content="python:here.toLocalizedTime(here.end(), long_format=1)">
+                                End Date Time
+                            </abbr>
+                        </tal:differentday>
+
+                        <tal:sameday tal:condition="python:here.start().Date() == here.end().Date()"
+                                     tal:define="ampm python:site_properties.getProperty('localLongTimeFormat').find('%p') >= 0">
+                            <abbr class="dtstart"
+                                  style="display: none;"
+                                  tal:attributes="title python:here.start()"
+                                  tal:content="python:here.toLocalizedTime(here.start(), long_format=1)">
+                                Start Date Time
+                            </abbr>
+                            <abbr class="dtend"
+                                  style="display: none;"
+                                  tal:attributes="title python:here.end()"
+                                  tal:content="python:here.toLocalizedTime(here.end(), long_format=1)">
+                                End Date Time
+                            </abbr>
+                            <span tal:replace="python:toLocalizedTime(here.start())">Start Date Time</span> <br />
+                            <span i18n:translate="event_from">from</span>
+                            <span tal:replace="python:test(ampm, here.start().AMPMMinutes(), here.start().TimeMinutes())">Start Time</span>
+                            <span i18n:translate="event_to">to</span>
+                            <span tal:replace="python:test(ampm, here.end().AMPMMinutes(), here.end().TimeMinutes())">End Time</span>
+                        </tal:sameday>
+
+                    </td>
+                </tr>
+                <tr tal:condition="here/location">
+                    <th i18n:translate="event_where">Where</th>
+                    <td class="location" tal:content="here/location">Oslo, Norway</td>
+                </tr>
+                <tr tal:condition="here/contact_name">
+                    <th i18n:translate="contact_name">Contact Name</th>
+                    <td class="fn"
+                        tal:content="here/contact_name">John Smith</td>
+                </tr>
+                <tr tal:define="contact_email here/contact_email"
+                    tal:condition="here/contact_email">
+                    <th i18n:translate="contact_email">Contact Email</th>
+                    <td class="email">
+                        <a tal:replace="structure python: here.spamProtect(contact_email)" />
+                    </td>
+                </tr>
+                <tr tal:condition="here/contact_phone">
+                    <th i18n:translate="contact_phone">Contact Phone</th>
+                    <td class="tel"
+                        tal:content="here/contact_phone">555-GET-PLONE</td>
+                </tr>
+                <tr tal:condition="here/getAttendees|nothing">
+                    <th i18n:translate="contact_attendees">Attendees</th>
+                    <td tal:content="python: ', '.join(here.getAttendees())">Person 1, Person 2</td>
+                </tr>
+                <tr>
+                    <th i18n:translate="heading_add_to_calendar">Add event to calendar</th>
+                    <td>
+                        <a href="#"
+                           tal:attributes="href string:$here_url/vcs_view"
+                           title="Add this item to your vCal calendar"
+                           i18n:attributes="title title_add_to_vcal;">
+                            <img tal:replace="structure here/icon_export_vcal.png" src="" alt="" />
+                            <span i18n:translate="label_add_to_vcal">vCal</span></a><br />
+                        <a href="#"
+                           tal:attributes="href string:$here_url/ics_view"
+                           title="Add this item to your iCal calendar"
+                           i18n:attributes="title title_add_to_ical;">
+                            <img tal:replace="structure here/icon_export_ical.png" src="" alt="" />
+                            <span i18n:translate="label_add_to_ical">iCal</span></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <div tal:condition="here/getText|nothing">
+            <div tal:replace="structure here/getText" />
+        </div>
+
+        <p tal:condition="here/event_url|nothing">
+            <a class="url"
+               href="event_url"
+               tal:attributes="href here/event_url"
+               i18n:translate="event_more_information">
+               More information about this event&hellip;</a>
+        </p>
+
+        <div class="next_events" i18n:domain="multievent">
+          <h4 i18n:translate="label_upcoming_events">Upcoming Events</h4>
+          <span metal:use-macro="python:here.widget('UpcomingEvents', mode='view')"/>
+        </div>
+
+        <div class="past_events" i18n:domain="multievent"
+          tal:condition="not:here/getExcludePastFromView">
+          <h4 i18n:translate="label_past_events">Past Events</h4>
+          <span metal:use-macro="python:here.widget('PastEvents', mode='view')"/>
+        </div>
+
+        <div metal:use-macro="here/document_relateditems/macros/relatedItems">
+            show related items if they exist
+        </div>
+
+        <div tal:condition="python:not isAnon and member.has_permission('Modify Portal Content', here)">
+          <form action=""
+                tal:attributes="action string:${here/absolute_url}/updateEvent">
+            <input type="submit" value="Update" />
+          </form>
+        </div>
+
+
+        <div class="visualClear" id="clear-space-after-relatedItems"><!-- --></div>
+
+    </tal:main-macro>
+</div>
+
+</body>
+</html>

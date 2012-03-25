@@ -1,19 +1,21 @@
-# Gettext Message File for Products.MultiEvent
+# Translation of Products.MultiEvent.pot to French
+# French Translation Team "plone-fr" <plone-fr@lists.plone.org>, 2003-2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: Products.MultiEvent\n"
 "POT-Creation-Date: 2012-03-25 17:13+0000\n"
-"PO-Revision-Date: 2008-02-04 18:00+0000\n"
-"Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
-"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2010-11-13 11:07+0100\n"
+"Last-Translator: YOURNAME <name@email.com>\n"
+"Language-Team: Italian <plone-it@lists.plone.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language-Code: it\n"
+"Language-Name: Italiano\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: Products.MultiEvent\n"
+"X-Is-Fallback-For: it-ch it-it\n"
 
 #: ./profiles/default/types/MultiEvent.xml
 msgid "An event that can happens multiple times"

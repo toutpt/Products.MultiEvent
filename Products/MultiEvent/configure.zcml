@@ -10,6 +10,12 @@
   <include package=".browser" />
 
   <i18n:registerTranslations directory="locales" />
+  <five:registerPackage package="." initialize=".initialize" />
+  <cmf:registerDirectory
+      name="skins"
+      directory="skins"
+      recursive="True"
+      />
 
   <genericsetup:registerProfile
       name="default"

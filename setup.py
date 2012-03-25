@@ -28,6 +28,7 @@ setup(name='Products.MultiEvent',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'Products.DataGridField',
           # -*- Extra requirements: -*-
       ],
       extras_require = dict(
