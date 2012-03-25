@@ -57,8 +57,8 @@ Date
 Credits
 =======
 
-MultiEvent written by Riccardo Lemmi - riccardo@reflab.com
-packaged by JeanMichel FRANCOIS aka toutpt - toutpt@gmail.com
+* MultiEvent written by Riccardo Lemmi - riccardo@reflab.com
+* packaged by JeanMichel FRANCOIS aka toutpt - toutpt@gmail.com
 
 License
 =======
